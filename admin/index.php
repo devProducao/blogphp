@@ -62,6 +62,12 @@ if(isset($_POST['email']) || isset($_POST['senha'])) {
         <p>
             <button type="submit">Entrar</button>
         </p>
+
+        <p>
+            <button>
+                <a href="criar.php">Criar conta adm</a>
+            </button>
+        </p>
     </form>
 </body>
 </html>

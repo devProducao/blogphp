@@ -18,6 +18,10 @@ include('protect.php');
 // $stmt->execute();
 
 // echo "card armazenado com sucesso"
+include_once('../config/connection.php');
+$stmt = $conectar->prepare("SELECT * FROM posts");
+$stmt->execute();
+$results = $stmt->fetchALL(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -31,31 +35,62 @@ include('protect.php');
     <title>Document</title>
 </head>
 <body>
-    <form action="enviar.php" method="POST">
-        <p>
-            <label>titulo</label>
-            <input type="text" name="titulo">
-        </p>
-        <p>
-            <label>descricao</label>
-            <input type="text" name="descricao">
-        </p>
+    <h1>Painel do adm</h1>
+    <p>Criar um novo post:</p>
 
-        <p>
-            <label>imagemURL</label>
-            <input type="text" name="imagemURL">
-        </p>
-        <p>
-            <label>data</label>
-            <input type="text" name="data">
-        </p>
-        <p>
-            <button type="submit">Entrar</button>
-        </p>
-    </form>
-    <p>
-        <a href="logout.php">Sair</a>
-    </p>
+    <div class="form-group">
+        <form action="enviar.php" method="POST">
+            <p>
+                <label>titulo</label>
+                <input type="text" name="titulo">
+            </p>
+            <p>
+                <label>descricao</label>
+                <input type="text" name="descricao">
+            </p>
+
+            <p>
+                <label>imagemURL</label>
+                <input type="text" name="imagemURL">
+            </p>
+            <p>
+                <label>data</label>
+                <input type="text" name="data">
+            </p>
+            <p>
+                <button type="submit">Enviar post</button>
+            </p>
+            <p>
+                <button>
+                <a href="logout.php">Sair</a>
+                </button>
+            </p>
+        </form>
+    </div>
+
+
+    <h2>
+        Todos os seus posts:
+    </h2>
+    <p>Aqui pode ser editado e deletado um post</p>
+
+    <table class="table">
+        <tbody>
+          <?php foreach($results as $post): ?>
+            <tr>
+            <td scope="row"><?= $post["title"] ?></td>
+            <td scope="row"><?= $post["description"] ?></td>
+            <td class="actions">
+            </a>
+            <a href="editar.php?title=<?= $post["title"] ?>">
+            <i class="fas fa-eye check-icon">Editar</i>
+            </a>
+            <a href="delete.php?title=<?= $post["title"] ?>">Apagar</a>
+            </td>
+            </tr>
+          <?php endforeach; ?>
+        </tbody>
+    </table>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

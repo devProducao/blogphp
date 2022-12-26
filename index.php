@@ -52,7 +52,14 @@
             <li class="nav-item">
               <a class="nav-link" href="#">SOBREMESAS</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="admin/index.php">Painel ADM</a>
+            </li>
           </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" type="text" id="myInput" onkeyup="myFunction()" placeholder="Pesquisar" aria-label="Pesquisar">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
+          </form>
         </div>
       </nav>
     </header><br><br>
@@ -136,16 +143,16 @@
       <table class="table">
         <tbody>
           <?php foreach($results as $post): ?>
-            <tr>
-            <td scope="row"><?= $post["title"] ?></td>
-            <td scope="row"><?= $post["description"] ?></td>
-            <td class="actions">
-            </a>
-            <a href="editar.php?title=<?= $post["title"] ?>">
-            <i class="fas fa-eye check-icon">Editar</i>
-            </a>
-            <a href="delete.php?title=<?= $post["title"] ?>">Apagar</a>
-            </td>
+            <tr id="myUL">
+              <td scope="row"><?= $post["title"] ?></td>
+              <td scope="row"><?= $post["description"] ?></td>
+              <td class="actions">
+              <!-- </a>
+              <a href="editar.php?title=<?= $post["title"] ?>">
+              <i class="fas fa-eye check-icon">Editar</i>
+              </a>
+              <a href="delete.php?title=<?= $post["title"] ?>">Apagar</a> -->
+              </td>
             </tr>
           <?php endforeach; ?>
         </tbody>
@@ -164,5 +171,26 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-  </body>
+    
+    <script>
+      function myFunction() {
+        // Declare variables
+        var input, filter, ul, li, a, i, txtValue;
+        input = document.getElementById('myInput');
+        filter = input.value.toUpperCase();
+        ul = document.getElementById("myUL");
+        li = ul.getElementsByTagName('li');
+
+        // Loop through all list items, and hide those who don't match the search query
+        for (i = 0; i < li.length; i++) {
+          a = li[i].getElementsByTagName("a")[0];
+          txtValue = a.textContent || a.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+          } else {
+            li[i].style.display = "none";
+          }
+        }
+      }
+    </script>
 </html>
